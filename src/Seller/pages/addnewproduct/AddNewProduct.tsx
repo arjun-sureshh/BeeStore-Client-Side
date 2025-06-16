@@ -39,6 +39,7 @@ const AddNewProduct: React.FC = () => {
   const [activateDelete, setActivateDelete] = useState<boolean>(false);
   // use navigation
   const navigate = useNavigate();
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const [fetchedData, setfetchedData] = useState<fetchedDataProps[]>([]);
 
@@ -68,7 +69,7 @@ const AddNewProduct: React.FC = () => {
       }
 
       try {
-        const response = await axios.get("http://localhost:5000/api/Login", {
+        const response = await axios.get(`${API_URL}/api/Login`, {
           headers: {
             "x-auth-token": token, // Send token in header
           },
@@ -94,7 +95,7 @@ const AddNewProduct: React.FC = () => {
       }
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/product/fetchallproducts/${sellerId}`,
+          `${API_URL}/api/product/fetchallproducts/${sellerId}`,
         );
         // console.log(response.data);
         setfetchedData(response.data.data);
@@ -112,7 +113,7 @@ const AddNewProduct: React.FC = () => {
       dispatch(toggleProductId(_id)); // Store product ID in Redux
 
       const response = await axios.get(
-        `http://localhost:5000/api/productvaraint/fetchVaraintByProductId/${_id}`,
+        `${API_URL}/api/productvaraint/fetchVaraintByProductId/${_id}`,
       );
       const productVariantId = response.data?.data?._id || ""; // Store variant ID or empty string if not found
 
@@ -137,7 +138,7 @@ const AddNewProduct: React.FC = () => {
   const handleDelete = async (productId: string) => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/product/${productId}`,
+        `${API_URL}/api/product/${productId}`,
       );
       console.log(response.data);
       setActivateDelete(true);

@@ -35,12 +35,12 @@ const ContentArea: React.FC = () => {
   const [totalIncome, setTotalIncome] = useState<string>("0");
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
+const API_URL = import.meta.env.VITE_API_URL;
   useEffect(() => {
     const fetchTotalIncome = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/booking/total-income",
+          `${API_URL}/api/booking/total-income`,
         );
         const data = await response.data;
         console.log(response);

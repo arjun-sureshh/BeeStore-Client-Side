@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 import styles from "./AdminChangePassword.module.css";
 import { useDispatch } from "react-redux";
 import { togglePageControl, toggleResetPage } from "../../../redux/toogleSlice";
@@ -6,6 +6,7 @@ import { IoArrowBackCircleOutline } from "react-icons/io5";
 import axios from "axios";
 import { TextField } from "@mui/material";
 import { IoIosArrowBack } from "react-icons/io";
+import { useNavigate } from "react-router";
 
 interface InputData {
   adminEmail: string;
@@ -16,6 +17,7 @@ interface InputData {
 interface fetchData {
   adminEmail: string;
   adminPassword: string;
+    _id: string;
 }
 
 const AdminChangePassword: React.FC = () => {
@@ -24,8 +26,10 @@ const AdminChangePassword: React.FC = () => {
   const [step, setStep] = useState<number>(1);
   const [otp, setOtp] = useState<string[]>(["", "", "", ""]);
   const otpRefs = useRef<(HTMLInputElement | null)[]>([]);
-  const [id] = useState<string>("67b437ba9acde33aace70f15");
-
+  const token = sessionStorage.getItem("admin");
+   const navigate = useNavigate();
+  // const [id] = useState<string>("67b437ba9acde33aace70f15");
+const API_URL = import.meta.env.VITE_API_URL;
   const [inputData, setInputData] = useState<InputData>({
     adminEmail: "",
     adminPassword: "",
@@ -35,28 +39,53 @@ const AdminChangePassword: React.FC = () => {
   const [alldata, setAlldata] = useState<fetchData>({
     adminEmail: "",
     adminPassword: "",
+     _id: "",
   });
 
   const [error, setError] = useState<Partial<InputData>>({});
   const [, setPasswordError] = useState<string>("");
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+useLayoutEffect(() => {
+    const fetchAdmindata = async () => {
+      if (!token) {
+        navigate("/Admin/Login"); // Redirect if no token found
+        return;
+      }
 
-  // Fetch admin details
-  const fetchData = async () => {
-    if (!id) {
-      console.error("ID is required");
-      return;
-    }
-    try {
-      const response = await axios.get(`http://localhost:5000/api/admin/${id}`);
-      setAlldata(response.data.data);
-    } catch (error) {
-      console.error("Error fetching admin details:", error);
-    }
-  };
+      try {
+        const response = await axios.get(`${API_URL}/api/Login`, {
+          headers: {
+            "x-auth-token": token, // Send token in header
+          },
+        });
+        setAlldata(response.data); // Set seller details in state
+        console.log(response.data, "admindata");
+      } catch (error) {
+        console.error("Error fetching seller details:", error);
+        // navigate("/login"); // Redirect to login on error
+      }
+    };
+
+    fetchAdmindata();
+  }, [token]);
+
+
+  // useEffect(() => {
+  // // Fetch admin details
+  // const fetchData = async () => {
+  //   if (!id) {
+  //     console.error("ID is required");
+  //     return;
+  //   }
+  //   try {
+  //     const response = await axios.get(`${API_URL}/api/admin/${id}`);
+  //     setAlldata(response.data.data);
+  //   } catch (error) {
+  //     console.error("Error fetching admin details:", error);
+  //   }
+  // };
+  //  fetchData();
+  // }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputData({
@@ -75,7 +104,7 @@ const AdminChangePassword: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/admin/send-otp",
+        `${API_URL}/api/admin/send-otp`,
         {
           adminEmail: inputData.adminEmail,
         },
@@ -119,7 +148,7 @@ const AdminChangePassword: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/admin/verify-otp",
+        `${API_URL}/api/admin/verify-otp`,
         {
           adminEmail: inputData.adminEmail,
           otp: otpCode,
@@ -193,7 +222,7 @@ const AdminChangePassword: React.FC = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/admin/change-password/${id}`,
+        `${API_URL}/api/admin/change-password/${alldata._id}`,
         { adminPassword: inputData.adminPassword },
       );
       alert(response.data.message);

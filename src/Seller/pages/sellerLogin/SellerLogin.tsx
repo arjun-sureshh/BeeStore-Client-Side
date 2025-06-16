@@ -30,7 +30,7 @@ const SellerLogin: React.FC<LoginPopupProps> = ({ onClose }) => {
   const [otp, setOtp] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
+const API_URL = import.meta.env.VITE_API_URL;
   const [otpSent, setOtpSent] = useState(false);
   const [otpVerified, setOtpVerified] = useState(false);
   const [emailExists, setEmailExists] = useState(false); // New state to track if email exists
@@ -45,7 +45,7 @@ const SellerLogin: React.FC<LoginPopupProps> = ({ onClose }) => {
       if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
         try {
           const response = await axios.post(
-            `http://localhost:5000/api/seller/check-email`,
+            `${API_URL}/api/seller/check-email`,
             { email: value },
           );
           setEmailExists(response.data.exists); // Assuming backend returns { exists: true/false }
@@ -100,7 +100,7 @@ const SellerLogin: React.FC<LoginPopupProps> = ({ onClose }) => {
     try {
       const data = { email, password };
       const response = await axios.post(
-        `http://localhost:5000/api/Login`,
+        `${API_URL}/api/Login`,
         data,
       );
       if (response.data.userType === "seller") {
@@ -160,7 +160,7 @@ const SellerLogin: React.FC<LoginPopupProps> = ({ onClose }) => {
 
   const handleSendOtp = async () => {
     try {
-      await axios.post(`http://localhost:5000/api/seller/send-otp`, {
+      await axios.post(`${API_URL}/api/seller/send-otp`, {
         sellerEmail: forgotEmail,
       });
       setOtpSent(true);
@@ -184,7 +184,7 @@ const SellerLogin: React.FC<LoginPopupProps> = ({ onClose }) => {
     }
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/seller/verify-otp`,
+        `${API_URL}/api/seller/verify-otp`,
         {
           sellerEmail: forgotEmail,
           otp,
@@ -227,7 +227,7 @@ const SellerLogin: React.FC<LoginPopupProps> = ({ onClose }) => {
       return;
     }
     try {
-      await axios.post(`http://localhost:5000/api/seller/reset-password`, {
+      await axios.post(`${API_URL}/api/seller/reset-password`, {
         email: forgotEmail,
         password: newPassword,
       });

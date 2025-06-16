@@ -15,6 +15,7 @@ const District: React.FC = () => {
   const [districtadded, setDistrictAdded] = useState<Record<string, any>>({}); // to confirm the valule added
   const [alldistrict, setAlldistrict] = useState<alldistrictProps[]>([]); // handle fetch data
   const [clickUpdateId, setClickUpdateId] = useState<string | null>(null); // handle the ID to update
+const API_URL = import.meta.env.VITE_API_URL;
 
   // add district to database
   const handleSubmit = async () => {
@@ -26,7 +27,7 @@ const District: React.FC = () => {
     };
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/district",
+        `${API_URL}/api/district`,
         data,
       );
       // console.log(response);
@@ -46,7 +47,7 @@ const District: React.FC = () => {
   // fetch data from the back end
   const fetchdistrict = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/district");
+      const response = await axios.get(`${API_URL}/api/district`);
 
       setAlldistrict(response.data.data);
     } catch (error) {
@@ -70,7 +71,7 @@ const District: React.FC = () => {
     }
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/district/${_id}`,
+        `${API_URL}/api/district/${_id}`,
       );
       console.log(response);
 
@@ -91,7 +92,7 @@ const District: React.FC = () => {
 
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/district/${_id}`,
+        `${API_URL}/api/district/${_id}`,
       );
 
       const districtName = response.data.data.districtName;
@@ -107,7 +108,7 @@ const District: React.FC = () => {
   const handleUpdate = async () => {
     try {
       const afterUpdate = await axios.put(
-        `http://localhost:5000/api/district/${clickUpdateId}`,
+        `${API_URL}/api/district/${clickUpdateId}`,
         { districtName: district },
       );
       console.log(afterUpdate);

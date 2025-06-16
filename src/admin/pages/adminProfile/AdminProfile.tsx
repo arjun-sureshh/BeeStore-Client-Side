@@ -25,6 +25,7 @@ const AdminProfile: React.FC = () => {
 
   const token = sessionStorage.getItem("admin");
   const navigate = useNavigate();
+const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchAdmindata = async () => {
@@ -34,7 +35,7 @@ const AdminProfile: React.FC = () => {
       }
 
       try {
-        const response = await axios.get("http://localhost:5000/api/Login", {
+        const response = await axios.get(`${API_URL}/api/Login`, {
           headers: {
             "x-auth-token": token, // Send token in header
           },
@@ -70,7 +71,7 @@ const AdminProfile: React.FC = () => {
 
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/admin/${_id}`,
+        `${API_URL}/api/admin/${_id}`,
       );
       console.log(response);
 

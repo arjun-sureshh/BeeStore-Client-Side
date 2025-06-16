@@ -44,14 +44,14 @@ interface fetchedDataProps {
 const ProductQC: React.FC = () => {
   const [fetchedData, setfetchedData] = useState<fetchedDataProps[]>([]);
   const [approved, setSetApproved] = useState<boolean>(false);
-
+const API_URL = import.meta.env.VITE_API_URL;
   // useeffect for fetch the seller details
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/product/fetchToQC",
+          `${API_URL}/api/product/fetchToQC`,
         );
         console.log("Fetched Sellers:", response.data.data);
 
@@ -74,7 +74,7 @@ const ProductQC: React.FC = () => {
 
       try {
         const response = await axios.post(
-          "http://localhost:5000/api/productvaraint/fetchVariantByProductId",
+          `${API_URL}/api/productvaraint/fetchVariantByProductId`,
           { productIds },
         );
         console.log("Fetched Product Variant:", response.data);
@@ -144,7 +144,7 @@ const ProductQC: React.FC = () => {
 
       try {
         const response = await axios.post(
-          "http://localhost:5000/api/productstock/fetchstockByProductVariantId",
+          `${API_URL}/api/productstock/fetchstockByProductVariantId`,
           { productVariantIds },
         );
         console.log("Fetched Product stock:", response.data);
@@ -176,7 +176,7 @@ const ProductQC: React.FC = () => {
     console.log(`Approved seller with ID: ${id}`);
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/product/approved/${id}`,
+        `${API_URL}/api/product/approved/${id}`,
         { qcStatus: 1 },
       );
       console.log("Seller Approved:", response.data);
@@ -192,7 +192,7 @@ const ProductQC: React.FC = () => {
     console.log(`Approved seller with ID: ${id}`);
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/product/approved/${id}`,
+        `${API_URL}/api/product/approved/${id}`,
         { qcStatus: -1 },
       );
       console.log("Seller Approved:", response.data);

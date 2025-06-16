@@ -59,7 +59,9 @@ const CancelledProducts: React.FC = () => {
     ListingStatus: "",
   });
   const navigate = useNavigate();
-  const baseUrl = "http://localhost:5000";
+  const baseUrl = import.meta.env.VITE_API_URL;
+  const API_URL = import.meta.env.VITE_API_URL;
+
 
   useEffect(() => {
     const fetchSellerDetails = async () => {
@@ -72,7 +74,7 @@ const CancelledProducts: React.FC = () => {
       }
 
       try {
-        const response = await axios.get("http://localhost:5000/api/Login", {
+        const response = await axios.get(`${API_URL}/api/Login`, {
           headers: {
             "x-auth-token": token,
           },
@@ -93,7 +95,7 @@ const CancelledProducts: React.FC = () => {
     const fetchCancelledProducts = async () => {
       try {
         const response = await axios.post(
-          `http://localhost:5000/api/product/cancelled-products`,
+          `${API_URL}/api/product/cancelled-products`,
           { sellerId: sellerData._id },
         );
         console.log(response);

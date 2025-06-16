@@ -48,12 +48,14 @@ const AllOrders: React.FC = () => {
   const [expandedOrders, setExpandedOrders] = useState<{
     [key: string]: boolean;
   }>({});
-  const baseUrl = "http://localhost:5000";
+  const baseUrl = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
     const fetchDeliveredOrders = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/booking/delivered",
+          `${API_URL}/api/booking/delivered`,
         );
         const data = await response.data;
         if (response.data.success) {

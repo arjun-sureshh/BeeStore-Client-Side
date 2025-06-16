@@ -11,6 +11,7 @@ const Brand: React.FC = () => {
   const [brand, setBrand] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [backEndError, setBackEndError] = useState<string>(""); // handle the back end error
+const API_URL = import.meta.env.VITE_API_URL;
 
   const [brandadded, setbrandAdded] = useState<Record<string, any>>({});
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null); // State for confirmation
@@ -27,7 +28,7 @@ const Brand: React.FC = () => {
     };
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/brand",
+        `${API_URL}/api/brand`,
         data,
       );
       setbrandAdded(response.data);
@@ -46,7 +47,7 @@ const Brand: React.FC = () => {
   // fetch data from the back end
   const fetchbrand = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/brand");
+      const response = await axios.get(`${API_URL}/api/brand`);
       // console.log(response)
       setAllbrand(response.data.brandDetails);
     } catch (error) {
@@ -73,7 +74,7 @@ const Brand: React.FC = () => {
 
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/brand/${_id}`,
+        `${API_URL}/api/brand/${_id}`,
       );
       console.log(response);
 
@@ -94,7 +95,7 @@ const Brand: React.FC = () => {
     }
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/brand/${_id}`,
+        `${API_URL}/api/brand/${_id}`,
       );
       const colorName = response.data.data.brandName;
       const colorId = response.data.data._id;
@@ -109,7 +110,7 @@ const Brand: React.FC = () => {
   const handleUpdate = async () => {
     try {
       const afterUpdate = await axios.put(
-        `http://localhost:5000/api/brand/${clickUpdateId}`,
+        `${API_URL}/api/brand/${clickUpdateId}`,
         { brandName: brand },
       );
       console.log(afterUpdate);

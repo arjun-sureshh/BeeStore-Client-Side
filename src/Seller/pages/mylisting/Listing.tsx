@@ -36,6 +36,8 @@ interface sellerData {
 
 const Listing: React.FC = () => {
   const navigate = useNavigate();
+   const API_URL = import.meta.env.VITE_API_URL;
+
   const [sellerData, setSellerData] = useState<sellerData>({
     _id: "",
     storeDiscription: "",
@@ -60,7 +62,7 @@ const Listing: React.FC = () => {
       }
 
       try {
-        const response = await axios.get("http://localhost:5000/api/Login", {
+        const response = await axios.get(`${API_URL}/api/Login`, {
           headers: {
             "x-auth-token": token, // Send token in header
           },
@@ -85,7 +87,7 @@ const Listing: React.FC = () => {
       const sellerId = sellerData?._id;
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/productvaraint/fetchallproducts/${sellerId}`,
+          `${API_URL}/api/productvaraint/fetchallproducts/${sellerId}`,
         );
         console.log(response.data.data);
         setfetchedData(response.data.data);
@@ -107,7 +109,7 @@ const Listing: React.FC = () => {
 
       try {
         const response = await axios.post(
-          "http://localhost:5000/api/productstock/fetchstockByProductVariantId",
+          `${API_URL}/api/productstock/fetchstockByProductVariantId`,
           { productVariantIds },
         );
         console.log("Fetched Product stock:", response.data);
@@ -138,7 +140,7 @@ const Listing: React.FC = () => {
   const handleDelete = async (productVaraintId: string) => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/productvaraint/${productVaraintId}`,
+        `${API_URL}/api/productvaraint/${productVaraintId}`,
       );
       console.log(response.data);
     } catch (error: any) {

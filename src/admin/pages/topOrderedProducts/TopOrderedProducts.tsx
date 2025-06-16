@@ -15,14 +15,15 @@ const TopOrderedProducts: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const baseUrl = "http://localhost:5000";
+  const baseUrl = import.meta.env.VITE_API_URL;
+  const API_URL = import.meta.env.VITE_API_URL;
   const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchTopProducts = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/booking/top-ordered",
+          `${API_URL}/api/booking/top-ordered`,
         );
         const data = response.data;
         if (data.success) {

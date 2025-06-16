@@ -20,14 +20,14 @@ interface fetchedDataProps {
 const RejectedSellers: React.FC = () => {
   const [fetchedData, setfetchedData] = useState<fetchedDataProps[]>([]);
   const [approved, setSetApproved] = useState<boolean>(false);
-
+const API_URL = import.meta.env.VITE_API_URL;
   // useeffect for fetch the seller details
 
   useEffect(() => {
     const fetchSeller = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/seller/RejectedSeller",
+          `${API_URL}/api/seller/RejectedSeller`,
         );
         console.log("Fetched Sellers:", response.data.data);
 
@@ -50,7 +50,7 @@ const RejectedSellers: React.FC = () => {
 
       try {
         const response = await axios.post(
-          "http://localhost:5000/api/address/getBySellerIds",
+          `${API_URL}/api/address/getBySellerIds`,
           { sellerIds },
         );
         console.log("Fetched Addresses:", response.data);
@@ -82,7 +82,7 @@ const RejectedSellers: React.FC = () => {
     console.log(`Approved seller with ID: ${id}`);
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/seller/approved/${id}`,
+        `${API_URL}/api/seller/approved/${id}`,
         { qcStatus: 1 },
       );
       console.log("Seller Approved:", response.data);

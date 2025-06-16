@@ -29,6 +29,7 @@ const AdminRegister: React.FC = () => {
   const [backendError, setBackendError] = useState<string>("");
   const [, setDataAdded] = useState<object>({});
   const [isLoading, setIsLoading] = useState<boolean>(false);
+const API_URL = import.meta.env.VITE_API_URL;
 
   // Handle input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -105,7 +106,7 @@ const AdminRegister: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/admin",
+        `${API_URL}/api/admin`,
         data,
       );
       setDataAdded(response.data);

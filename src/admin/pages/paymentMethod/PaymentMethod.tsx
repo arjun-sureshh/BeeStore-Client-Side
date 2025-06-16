@@ -19,7 +19,7 @@ const PaymentMethod: React.FC = () => {
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null); // State for confirmation
   const [alldata, setAlldata] = useState<alldataProps[]>([]) // handle all fetch data
   const [clickUpdateId, setClickUpdateId] = useState<string | null>(null); // handle the Id of Data which what to update
-
+const API_URL = import.meta.env.VITE_API_URL;
   // handle the submit button  
   const handleSubmit = async () => {
 
@@ -33,7 +33,7 @@ const PaymentMethod: React.FC = () => {
       paymentMethodName: inputData
     }
     try {
-      const response = await axios.post("http://localhost:5000/api/paymentmethod", data);
+      const response = await axios.post(`${API_URL}/api/paymentmethod`, data);
       setDataAdded(response)
       setInputData("")
     } catch (error: any) {
@@ -50,7 +50,7 @@ const PaymentMethod: React.FC = () => {
   // fetch data from the back end 
   const fetchItems = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/paymentmethod");
+      const response = await axios.get(`${API_URL}/api/paymentmethod`);
       // console.log(response)
       setAlldata(response.data.paymentMethodDetails)
     } catch (error) {
@@ -76,7 +76,7 @@ const PaymentMethod: React.FC = () => {
     }
 
     try {
-      const response = await axios.delete(`http://localhost:5000/api/paymentmethod/${_id}`);
+      const response = await axios.delete(`${API_URL}/api/paymentmethod/${_id}`);
       console.log(response);
 
       // Remove  the deleted items for UI
@@ -95,7 +95,7 @@ const PaymentMethod: React.FC = () => {
       throw new Error(" ID is required");
     }
     try {
-      const response = await axios.get(`http://localhost:5000/api/paymentmethod/${_id}`);
+      const response = await axios.get(`${API_URL}/api/paymentmethod/${_id}`);
       const itemName = response.data.data.paymentMethodName;
       const itemId = response.data.data._id;
       setInputData(itemName)
@@ -108,7 +108,7 @@ const PaymentMethod: React.FC = () => {
   //  update function
   const handleUpdate = async () => {
     try {
-      const afterUpdate = await axios.put(`http://localhost:5000/api/paymentmethod/${clickUpdateId}`, { paymentMethodName: inputData });
+      const afterUpdate = await axios.put(`${API_URL}/api/paymentmethod/${clickUpdateId}`, { paymentMethodName: inputData });
       console.log(afterUpdate);
 
       setInputData('');

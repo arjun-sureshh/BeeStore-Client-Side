@@ -60,6 +60,7 @@ const SellerRegThirdPage: React.FC = () => {
   const accountNumberRef = useRef<HTMLInputElement | null>(null);
   const reAccountNumbernRef = useRef<HTMLInputElement | null>(null);
   const ifscCodeRef = useRef<HTMLInputElement | null>(null);
+const API_URL = import.meta.env.VITE_API_URL;
 
   // use navigation
   const navigate = useNavigate();
@@ -72,7 +73,7 @@ const SellerRegThirdPage: React.FC = () => {
     const fetchProductStatus = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/seller/${sellerId}`,
+          `${API_URL}/api/seller/${sellerId}`,
         );
         console.log(response.data);
         const sellerName = response.data.data.sellerName;
@@ -251,7 +252,7 @@ const SellerRegThirdPage: React.FC = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/address/seller`,
+        `${API_URL}/api/address/seller`,
         addressData,
       );
       console.log(response.data);
@@ -277,7 +278,7 @@ const SellerRegThirdPage: React.FC = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/seller/bankDetails/${sellerId}`,
+        `${API_URL}/api/seller/bankDetails/${sellerId}`,
         data,
       );
       console.log(response.data);

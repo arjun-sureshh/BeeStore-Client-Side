@@ -61,7 +61,7 @@ interface DashboardStats {
 
 const SellerHomePage: React.FC = () => {
   const navigate = useNavigate();
-  const baseUrl = "http://localhost:5000";
+  const baseUrl = import.meta.env.VITE_API_URL;
   const [sellerData, setSellerData] = useState<SellerData>({
     _id: "",
     storeDiscription: "",

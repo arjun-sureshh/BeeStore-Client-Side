@@ -76,6 +76,7 @@ const ProductAddingSections: React.FC = () => {
   const specification = useSelector(
     (state: RootState) => state.toggle.productSpecification,
   );
+  const API_URL = import.meta.env.VITE_API_URL;
   const [selectedVariant, setSelectedVariant] = useState<fetchedDatas>({
     ProductVariantId: "",
     productId: "",
@@ -146,7 +147,7 @@ const ProductAddingSections: React.FC = () => {
     const fetchDatasFromProduct = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/product/fetchProductData/${productId}`,
+          `${API_URL}/api/product/fetchProductData/${productId}`,
         );
         console.log(response.data);
         const product_Id = response.data.data._id;
@@ -193,7 +194,7 @@ const ProductAddingSections: React.FC = () => {
 
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/productvaraint/fetchVaraintByProductId/${product_Id}`,
+          `${API_URL}/api/productvaraint/fetchVaraintByProductId/${product_Id}`,
         );
         // console.log(response.data);
 
@@ -371,7 +372,7 @@ const ProductAddingSections: React.FC = () => {
     }
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/product/skuidUpdate/${productId}`,
+        `${API_URL}/api/product/skuidUpdate/${productId}`,
         {
           // ✅ Corrected URL
           skuId: productFields.skuId,
@@ -396,7 +397,7 @@ const ProductAddingSections: React.FC = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/productvaraint`,
+        `${API_URL}/api/productvaraint`,
         {
           // ✅ Corrected URL
           productId: productId,
@@ -421,7 +422,7 @@ const ProductAddingSections: React.FC = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/productvaraint/updateVaraint/${variantID}`,
+        `${API_URL}/api/productvaraint/updateVaraint/${variantID}`,
         {
           // ✅ Corrected URL
           productId: productId,
@@ -477,7 +478,7 @@ const ProductAddingSections: React.FC = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/keyfeatures`,
+        `${API_URL}/api/keyfeatures`,
         {
           productVariantId: variantID,
           features: produKeyFeature, // ✅ Pass an array of { title, content }
@@ -514,7 +515,7 @@ const ProductAddingSections: React.FC = () => {
       console.log("Handle Search KeyWord Working");
 
       const response = await axios.post(
-        `http://localhost:5000/api/searchkeyword`,
+        `${API_URL}/api/searchkeyword`,
         {
           productVariantId: variantID,
           searchKeyWords: searchKeyWords, // ✅ Pass an array of { searchKeyWord }
@@ -551,7 +552,7 @@ const ProductAddingSections: React.FC = () => {
       console.log("Handle Specification Working");
 
       const response = await axios.post(
-        `http://localhost:5000/api/specification`,
+        `${API_URL}/api/specification`,
         {
           productVariantId: variantID,
           specification: specification, // ✅ Pass an array of { searchKeyWord }
@@ -639,7 +640,7 @@ const handleImage = async (variantID: string | null) => {
     console.log("Sending POST /api/gallery, variantID:", variantID);
 
     const response = await axios.post(
-      "http://localhost:5000/api/gallery",
+      `${API_URL}/api/gallery`,
       formData,
       {
         headers: {
@@ -656,7 +657,7 @@ const handleImage = async (variantID: string | null) => {
     let errorMessage = "Failed to upload images.";
     if (axios.isAxiosError(error)) {
       if (error.code === "ERR_NETWORK") {
-        errorMessage = "Cannot connect to the server. Ensure the backend is running at http://localhost:5000.";
+        errorMessage = "Cannot connect to the server. Ensure the backend is running at ${API_URL}.";
         console.error("Network error details:", error.message);
       } else if (error.response) {
         errorMessage = error.response.data.error || "Server error occurred.";
@@ -682,7 +683,7 @@ const handleImage = async (variantID: string | null) => {
 
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/productstock`,
+        `${API_URL}/api/productstock`,
         {
           productvariantId: variantID,
           stockqty: productFields.stock, // ✅ Pass an array of { searchKeyWord }
@@ -709,7 +710,7 @@ const handleImage = async (variantID: string | null) => {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/productstock/updateStock/${variantID}`,
+        `${API_URL}/api/productstock/updateStock/${variantID}`,
         {
           stockqty: productFields.stock, // ✅ Pass an array of { searchKeyWord }
         },
@@ -735,7 +736,7 @@ const handleImage = async (variantID: string | null) => {
     }
 
     try {
-      const response = await axios.post(`http://localhost:5000/api/sizebody`, {
+      const response = await axios.post(`${API_URL}/api/sizebody`, {
         productvariantId: variantID,
         size: productFields.sizebody,
         sizeHeadNameId: productFields.sizeHeadId, // ✅ Pass an array of { searchKeyWord }

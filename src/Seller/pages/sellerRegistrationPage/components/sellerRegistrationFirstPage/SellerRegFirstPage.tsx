@@ -29,7 +29,7 @@ const SellerRegFirstPage: React.FC = () => {
     otpverify: "",
   });
   const [emailExist, setEmailExist] = useState<string>("");
-
+const API_URL = import.meta.env.VITE_API_URL;
   const emailRef = useRef<HTMLInputElement | null>(null); // ✅ Ensure correct type
   const mobileNumberRef = useRef<HTMLInputElement | null>(null); // ✅ Ensure correct type
   const otpRef = useRef<HTMLInputElement | null>(null); // ✅ Ensure correct type
@@ -49,7 +49,7 @@ const SellerRegFirstPage: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/seller/send-otp",
+        `${API_URL}/api/seller/send-otp`,
         { sellerEmail: email },
       );
       setOtpSent(true);
@@ -74,7 +74,7 @@ const SellerRegFirstPage: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/seller/verify-otp",
+        `${API_URL}/api/seller/verify-otp`,
         { sellerEmail: email, otp: otp },
       );
       console.log(response.data);
@@ -156,7 +156,7 @@ const SellerRegFirstPage: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/seller",
+        `${API_URL}/api/seller`,
         data,
       );
       console.log(response.data);

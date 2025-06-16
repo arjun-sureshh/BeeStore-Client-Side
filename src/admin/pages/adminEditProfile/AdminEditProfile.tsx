@@ -39,7 +39,7 @@ const AdminEditProfile: React.FC = () => {
   const [, setDataAdded] = useState<Record<string, any>>({}); //handle addededData
   const [clientError, setClientError] = useState<string>(""); // handle error like no changes detected
   const [successfullMsg, setSuccessfullMsg] = useState<String>("");
-
+const API_URL = import.meta.env.VITE_API_URL;
   const token = sessionStorage.getItem("admin");
   const navigate = useNavigate();
 
@@ -51,7 +51,7 @@ const AdminEditProfile: React.FC = () => {
       }
 
       try {
-        const response = await axios.get("http://localhost:5000/api/Login", {
+        const response = await axios.get(`${API_URL}/api/Login`, {
           headers: {
             "x-auth-token": token, // Send token in header
           },
@@ -124,7 +124,7 @@ const AdminEditProfile: React.FC = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/admin/${alldata._id}`,
+        `${API_URL}/api/admin/${alldata._id}`,
         updatedData,
       );
       setDataAdded(response.data);
@@ -151,7 +151,7 @@ const AdminEditProfile: React.FC = () => {
     }
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/admin/${alldata._id}`,
+        `${API_URL}/api/admin/${alldata._id}`,
       );
       const data = response.data.data;
       setInputData({

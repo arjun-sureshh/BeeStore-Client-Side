@@ -22,11 +22,11 @@ const DisplayContainer: React.FC<DisplayInputContainerProps> = ({
   inputRefs,
 }) => {
   const [fetchColor, setfetchColor] = useState<fetchColor[]>([]);
-
+const API_URL = import.meta.env.VITE_API_URL;
   useEffect(() => {
     const fetchColorData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/color/");
+        const response = await axios.get(`${API_URL}/api/color/`);
         console.log(response.data);
         setfetchColor(response.data.data);
       } catch (error) {}

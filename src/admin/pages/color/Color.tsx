@@ -11,7 +11,7 @@ const Color: React.FC = () => {
   const [color, setColor] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [backEndError, setBackEndError] = useState<string>(""); // handle the back end error
-
+const API_URL = import.meta.env.VITE_API_URL;
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null); // State for confirmation
   const [coloradded, setColorAdded] = useState<Record<string, any>>({});
   const [allcolor, setAllcolor] = useState<allcolorProps[]>([]);
@@ -28,7 +28,7 @@ const Color: React.FC = () => {
     };
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/color",
+        `${API_URL}/api/color`,
         data,
       );
       setColorAdded(response);
@@ -47,7 +47,7 @@ const Color: React.FC = () => {
   // fetch data from the back end
   const fetchcolor = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/color");
+      const response = await axios.get(`${API_URL}/api/color`);
       // console.log(response)
       setAllcolor(response.data.data);
     } catch (error) {
@@ -74,7 +74,7 @@ const Color: React.FC = () => {
 
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/color/${_id}`,
+        `${API_URL}/api/color/${_id}`,
       );
       console.log(response);
 
@@ -94,7 +94,7 @@ const Color: React.FC = () => {
     }
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/color/${_id}`,
+        `${API_URL}/api/color/${_id}`,
       );
       const colorName = response.data.data.color;
       const colorId = response.data.data._id;
@@ -109,7 +109,7 @@ const Color: React.FC = () => {
   const handleUpdate = async () => {
     try {
       const afterUpdate = await axios.put(
-        `http://localhost:5000/api/color/${clickUpdateId}`,
+        `${API_URL}/api/color/${clickUpdateId}`,
         { color: color },
       );
       console.log(afterUpdate);

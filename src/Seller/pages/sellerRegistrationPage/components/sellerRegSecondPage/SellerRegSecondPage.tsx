@@ -24,7 +24,7 @@ const SellerRegSecondPage: React.FC = () => {
   //useref
   const nameRef = useRef<HTMLInputElement | null>(null);
   const displayNameRef = useRef<HTMLInputElement | null>(null);
-
+const API_URL = import.meta.env.VITE_API_URL;
   // handle register
   const handleRegister = async () => {
     if (!name) {
@@ -62,7 +62,7 @@ const SellerRegSecondPage: React.FC = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/seller/updateName/${sellerId}`,
+        `${API_URL}/api/seller/updateName/${sellerId}`,
         data,
       );
       console.log(response.data);

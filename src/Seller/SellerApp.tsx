@@ -7,6 +7,7 @@ import axios from "axios";
 const SellerApp: React.FC = () => {
   const [showLogin, setShowLogin] = useState<boolean>(false);
   const navigate = useNavigate();
+const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchSellerDetails = async () => {
@@ -17,7 +18,7 @@ const SellerApp: React.FC = () => {
       }
 
       try {
-        const response = await axios.get("http://localhost:5000/api/Login", {
+        const response = await axios.get(`${API_URL}/api/Login`, {
           headers: {
             "x-auth-token": token,
           },

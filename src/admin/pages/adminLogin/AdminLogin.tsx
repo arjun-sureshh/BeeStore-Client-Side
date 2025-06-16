@@ -22,6 +22,7 @@ const AdminLogin: React.FC = () => {
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [, setEmailExists] = useState<boolean>(true);
+const API_URL = import.meta.env.VITE_API_URL;
 
   // Handle input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,7 +69,7 @@ const AdminLogin: React.FC = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/Login`,
+        `${API_URL}/api/Login`,
         formData,
       );
       if (response.data.userType === "admin") {

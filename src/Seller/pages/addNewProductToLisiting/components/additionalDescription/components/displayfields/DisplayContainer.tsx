@@ -19,6 +19,7 @@ interface fetchSizeHead {
   _id: string;
   sizeHeadName: string;
 }
+const API_URL = import.meta.env.VITE_API_URL;
 
 const DisplayContainer: React.FC<DisplayInputContainerProps> = ({
   inputRefs,
@@ -28,7 +29,7 @@ const DisplayContainer: React.FC<DisplayInputContainerProps> = ({
   useEffect(() => {
     const fetchSizeHead = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/sizehead/");
+        const response = await axios.get(`${API_URL}/api/sizehead/`);
         console.log(response.data);
         setfetchColor(response.data.data);
       } catch (error) {}

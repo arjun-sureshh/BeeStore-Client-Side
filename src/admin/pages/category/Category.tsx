@@ -17,6 +17,7 @@ const Category: React.FC = () => {
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null); // State for confirmation
   const [alldata, setAlldata] = useState<alldataProps[]>([]); // handle all fetch data
   const [clickUpdateId, setClickUpdateId] = useState<string | null>(null); // handle the Id of Data which what to update
+const API_URL = import.meta.env.VITE_API_URL;
 
   // handle the submit button
   const handleSubmit = async () => {
@@ -30,7 +31,7 @@ const Category: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/category",
+        `${API_URL}/api/category`,
         data,
       );
       setDataAdded(response.data); // Save response data
@@ -49,7 +50,7 @@ const Category: React.FC = () => {
   // fetch data from the back end
   const fetchItems = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/category");
+      const response = await axios.get(`${API_URL}/api/category`);
       // console.log(response.data)
       setAlldata(response.data);
       // console.log(alldata);
@@ -76,7 +77,7 @@ const Category: React.FC = () => {
 
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/category/${_id}`,
+        `${API_URL}/api/category/${_id}`,
       );
       console.log(response);
 
@@ -97,7 +98,7 @@ const Category: React.FC = () => {
     }
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/category/${_id}`,
+        `${API_URL}/api/category/${_id}`,
       );
       const itemName = response.data.data.categoryName;
       const mainCategoryName = response.data.data.mainCategory;
@@ -119,7 +120,7 @@ const Category: React.FC = () => {
 
     try {
       const afterUpdate = await axios.put(
-        `http://localhost:5000/api/category/${clickUpdateId}`,
+        `${API_URL}/api/category/${clickUpdateId}`,
         data,
       );
       console.log(afterUpdate);

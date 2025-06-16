@@ -13,7 +13,7 @@ const AdminDashboard: React.FC = () => {
   const token = sessionStorage.getItem("admin");
   const [adminData, setAdmindata] = useState<any>({});
   const navigate = useNavigate();
-
+const API_URL = import.meta.env.VITE_API_URL;
   useEffect(() => {
     const fetchAdmindata = async () => {
       if (!token) {
@@ -22,7 +22,7 @@ const AdminDashboard: React.FC = () => {
       }
 
       try {
-        const response = await axios.get("http://localhost:5000/api/Login", {
+        const response = await axios.get(`${API_URL}/api/Login`, {
           headers: {
             "x-auth-token": token, // Send token in header
           },

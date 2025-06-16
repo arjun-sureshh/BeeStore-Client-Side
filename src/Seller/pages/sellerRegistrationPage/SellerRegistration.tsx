@@ -11,7 +11,7 @@ import { IoIosCheckmarkCircle } from "react-icons/io";
 
 const SellerRegistration: React.FC = () => {
   const dispatch = useDispatch();
-
+const API_URL = import.meta.env.VITE_API_URL;
   const sellerRegistrationStage = useSelector(
     (state: RootState) => state.toggle.sellerRegistrationStage,
   );
@@ -24,7 +24,7 @@ const SellerRegistration: React.FC = () => {
     const fetchProductStatus = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/seller/${sellerId}`,
+          `${API_URL}/api/seller/${sellerId}`,
         );
         dispatch(
           toggleSellerRegistrationStage(response.data.data.ListingStatus),

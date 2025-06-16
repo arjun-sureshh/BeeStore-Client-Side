@@ -50,13 +50,14 @@ const OrderManagement: React.FC = () => {
   const [limit] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
+const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchOrders = async () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/booking/get-order-details?page=${page}&limit=${limit}`,
+          `${API_URL}/api/booking/get-order-details?page=${page}&limit=${limit}`,
         );
         console.log(response.data);
         
@@ -94,7 +95,7 @@ const OrderManagement: React.FC = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/booking/search-orders-by-product-title?productTitle=${searchTerm}&page=${page}&limit=${limit}`,
+        `${API_URL}/api/booking/search-orders-by-product-title?productTitle=${searchTerm}&page=${page}&limit=${limit}`,
       );
       const { data, pagination } = response.data;
       const mappedOrders = data.map((order: any) => ({
@@ -141,7 +142,7 @@ const OrderManagement: React.FC = () => {
         Received: 4,
       };
       const response = await axios.put(
-        "http://localhost:5000/api/booking/update-the-status",
+        `${API_URL}/api/booking/update-the-status`,
         {
           bookingId: orderId,
           cartId: cartItemId,
@@ -211,7 +212,7 @@ const OrderManagement: React.FC = () => {
                 <div className={styles.productImageWrapper}>
                   {item.image ? (
                     <img
-                      src={`http://localhost:5000${item.image}`}
+                      src={`${API_URL}${item.image}`}
                       alt={item.variantDetails.productTitle}
                       className={styles.productImage}
                     />

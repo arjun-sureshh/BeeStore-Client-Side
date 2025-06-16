@@ -45,7 +45,8 @@ const Inventory: React.FC = () => {
     outOfStock: number;
   }>({ all: 0, lowStock: 0, outOfStock: 0 });
   const navigate = useNavigate();
-  const baseUrl = "http://localhost:5000";
+  const baseUrl = import.meta.env.VITE_API_URL;
+   const API_URL = import.meta.env.VITE_API_URL;
   const [sellerData, setSellerData] = useState<sellerData>({
     _id: "",
     storeDiscription: "",
@@ -70,7 +71,7 @@ const Inventory: React.FC = () => {
       }
 
       try {
-        const response = await axios.get("http://localhost:5000/api/Login", {
+        const response = await axios.get(`${API_URL}/api/Login`, {
           headers: {
             "x-auth-token": token,
           },
@@ -95,7 +96,7 @@ const Inventory: React.FC = () => {
 
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/productvaraint/fetchallproducts-for-Inventory/${sellerId}`,
+          `${API_URL}/api/productvaraint/fetchallproducts-for-Inventory/${sellerId}`,
         );
         setFetchedData(response.data.data);
         // console.log(response);
@@ -117,7 +118,7 @@ const Inventory: React.FC = () => {
 
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/productvaraint/fetchallproducts-for-low-stock/${sellerId}`,
+          `${API_URL}/api/productvaraint/fetchallproducts-for-low-stock/${sellerId}`,
         );
         setInventoryCounts((prev) => ({
           ...prev,
@@ -134,7 +135,7 @@ const Inventory: React.FC = () => {
 
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/productvaraint/fetchallproducts-for-out-of-stock/${sellerId}`,
+          `${API_URL}/api/productvaraint/fetchallproducts-for-out-of-stock/${sellerId}`,
         );
         setInventoryCounts((prev) => ({
           ...prev,
@@ -162,7 +163,7 @@ const Inventory: React.FC = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/productstock/AddStock/${variantId}`,
+        `${API_URL}/api/productstock/AddStock/${variantId}`,
         {
           stockqty: stockInput,
         },
@@ -179,11 +180,11 @@ const Inventory: React.FC = () => {
     if (!sellerId) return;
 
     try {
-      let url = `http://localhost:5000/api/productvaraint/fetchallproducts-for-Inventory/${sellerId}`;
+      let url = `${API_URL}/api/productvaraint/fetchallproducts-for-Inventory/${sellerId}`;
       if (type === "lowStock") {
-        url = `http://localhost:5000/api/productvaraint/fetchallproducts-for-low-stock/${sellerId}`;
+        url = `${API_URL}/api/productvaraint/fetchallproducts-for-low-stock/${sellerId}`;
       } else if (type === "outOfStock") {
-        url = `http://localhost:5000/api/productvaraint/fetchallproducts-for-out-of-stock/${sellerId}`;
+        url = `${API_URL}/api/productvaraint/fetchallproducts-for-out-of-stock/${sellerId}`;
       }
       const response = await axios.get(url);
       setFetchedData(response.data.data);

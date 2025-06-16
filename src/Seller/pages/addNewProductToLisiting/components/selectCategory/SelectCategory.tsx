@@ -28,6 +28,7 @@ const SelectCategory: React.FC<selectCategoryProps> = ({ sellerId }) => {
   const [searchData, setSearchData] = useState<string>("");
   const [fetchData, setFetchData] = useState<fetchData[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const API_URL = import.meta.env.VITE_API_URL;
 
   // Handle search input change and API call
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,7 +42,7 @@ const SelectCategory: React.FC<selectCategoryProps> = ({ sellerId }) => {
 
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/category/search/${value}`,
+        `${API_URL}/api/category/search/${value}`,
       );
       setFetchData(response.data);
     } catch (error) {
@@ -65,7 +66,7 @@ const SelectCategory: React.FC<selectCategoryProps> = ({ sellerId }) => {
 
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/product`,
+        `${API_URL}/api/product`,
         data,
       ); // Send data directly
       // console.log("Product draft created:", response.data);

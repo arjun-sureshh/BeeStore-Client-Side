@@ -19,6 +19,7 @@ const SelectBrand: React.FC = () => {
   const [searchData, setSearchData] = useState<string>("");
   const [fetchData, setFetchData] = useState<fetchData[]>([]);
   const [selectedBrandId, setSelectedBrandId] = useState<string | null>(null);
+  const API_URL = import.meta.env.VITE_API_URL;
   const [selectedBrandName, setSelectedBrandName] = useState<string | null>(
     null,
   );
@@ -36,7 +37,7 @@ const SelectBrand: React.FC = () => {
 
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/brand/search/${value}`,
+        `${API_URL}/api/brand/search/${value}`,
       );
       setFetchData(response.data);
     } catch (error) {
@@ -64,7 +65,7 @@ const SelectBrand: React.FC = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/product/brandId/${productId}`,
+        `${API_URL}/api/product/brandId/${productId}`,
         {
           // ✅ Corrected URL
           brandId: brandIdToUse, // Ensure key matches backend expectations
@@ -91,7 +92,7 @@ const SelectBrand: React.FC = () => {
   const addNewBrand = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/brand/brandBySeller`,
+        `${API_URL}/api/brand/brandBySeller`,
         {
           // ✅ Corrected URL
           brandName: searchData, // Ensure key matches backend expectations

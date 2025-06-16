@@ -15,12 +15,13 @@ const DeliveredOrders: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchDeliveredOrders = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/booking/delivered",
+          `${API_URL}/api/booking/delivered`,
         );
         const data = await response.data;
         if (data.success) {

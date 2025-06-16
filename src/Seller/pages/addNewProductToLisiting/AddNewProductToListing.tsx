@@ -39,6 +39,7 @@ const AddNewProductToListing: React.FC = () => {
   );
   const productId = useSelector((state: RootState) => state.toggle.productId);
   const [saved, setSaved] = useState<boolean>(false);
+const API_URL = import.meta.env.VITE_API_URL;
 
   const navigate = useNavigate();
   const [sellerData, setSellerData] = useState<sellerData>({
@@ -65,7 +66,7 @@ const AddNewProductToListing: React.FC = () => {
       }
 
       try {
-        const response = await axios.get("http://localhost:5000/api/Login", {
+        const response = await axios.get(`${API_URL}/api/Login`, {
           headers: {
             "x-auth-token": token, // Send token in header
           },
@@ -100,7 +101,7 @@ const AddNewProductToListing: React.FC = () => {
     const fetchProductStatus = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/product/${productId}`,
+          `${API_URL}/api/product/${productId}`,
         );
         dispatch(
           toggleProductAddingState(response.data.productDetails.ListingStatus),

@@ -15,7 +15,7 @@ const PolicyMethod: React.FC = () => {
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null); // State for confirmation
   const [alldata, setAlldata] = useState<alldataProps[]>([]); // handle all fetch data
   const [clickUpdateId, setClickUpdateId] = useState<string | null>(null); // handle the Id of Data which what to update
-
+const API_URL = import.meta.env.VITE_API_URL;
   // handle the submit button
   const handleSubmit = async () => {
     if (!inputData) {
@@ -27,7 +27,7 @@ const PolicyMethod: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/policymethod",
+        `${API_URL}/api/policymethod`,
         data,
       );
 
@@ -49,7 +49,7 @@ const PolicyMethod: React.FC = () => {
   const fetchItems = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/policymethod",
+        `${API_URL}/api/policymethod`,
       );
       // console.log(response)
       setAlldata(response.data.policymethodsDetails);
@@ -77,7 +77,7 @@ const PolicyMethod: React.FC = () => {
 
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/policymethod/${_id}`,
+        `${API_URL}/api/policymethod/${_id}`,
       );
       console.log(response);
 
@@ -98,7 +98,7 @@ const PolicyMethod: React.FC = () => {
     }
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/policymethod/${_id}`,
+        `${API_URL}/api/policymethod/${_id}`,
       );
       const itemName = response.data.data.policyMethodName;
       const itemId = response.data.data._id;
@@ -113,7 +113,7 @@ const PolicyMethod: React.FC = () => {
   const handleUpdate = async () => {
     try {
       const afterUpdate = await axios.put(
-        `http://localhost:5000/api/policymethod/${clickUpdateId}`,
+        `${API_URL}/api/policymethod/${clickUpdateId}`,
         { policyMethodName: inputData },
       );
       console.log(afterUpdate);
