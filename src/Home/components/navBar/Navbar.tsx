@@ -17,6 +17,7 @@ const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const token = sessionStorage.getItem("user");
   const location = useLocation();
+  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchSuggestions = async () => {
@@ -26,7 +27,7 @@ const Navbar: React.FC = () => {
       }
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/product/search/suggestions`,
+          `${API_URL}/api/product/search/suggestions`,
           {
             params: { query: searchQuery },
           },
