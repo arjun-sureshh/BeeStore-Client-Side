@@ -15,6 +15,7 @@ const MainBar = () => {
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false); // State for mobile search toggle
   const navigate = useNavigate();
   const dispatch = useDispatch();
+   const API_URL = import.meta.env.VITE_API_URL;
   // Fetch suggestions when searchQuery changes
   useEffect(() => {
     const fetchSuggestions = async () => {
@@ -24,7 +25,7 @@ const MainBar = () => {
       }
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/product/search/suggestions`,
+          `${API_URL}/api/product/search/suggestions`,
           {
             params: { query: searchQuery },
           },
