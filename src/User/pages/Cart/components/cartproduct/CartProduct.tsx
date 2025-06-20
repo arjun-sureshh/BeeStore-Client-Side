@@ -32,7 +32,8 @@ const CartProduct: React.FC<CartProductProps> = ({
   existingUserData,
   setIsChanged,
 }) => {
-  const baseURL = "http://localhost:5000";
+  const API_URL = import.meta.env.VITE_API_URL;
+  const baseURL =import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
   const [cartQty, setCartQty] = useState<number>(0);
 
@@ -62,7 +63,7 @@ const CartProduct: React.FC<CartProductProps> = ({
     }
 
     try {
-      const response = await axios.delete("http://localhost:5000/api/cart", {
+      const response = await axios.delete(`${API_URL}/api/cart`, {
         data: { cartId: cartItem.cart_Id, userId: existingUserData._id },
       });
 
@@ -101,7 +102,7 @@ const CartProduct: React.FC<CartProductProps> = ({
 
     try {
       const response = await axios.put(
-        "http://localhost:5000/api/cart/removeOne",
+        `${API_URL}/api/cart/removeOne`,
         {
           cart_id: cartItem.cart_Id,
         },
@@ -141,7 +142,7 @@ const CartProduct: React.FC<CartProductProps> = ({
 
     try {
       const response = await axios.put(
-        "http://localhost:5000/api/cart/addOne",
+        `${API_URL}/api/cart/addOne`,
         {
           cart_id: cartItem.cart_Id,
         },
