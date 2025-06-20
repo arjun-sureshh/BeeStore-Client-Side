@@ -153,9 +153,7 @@ const SellerHomePage: React.FC = () => {
     return <div className={styles.loading}>Loading...</div>;
   }
 
-  if (error) {
-    return <div className={styles.error}>{error}</div>;
-  }
+ 
 
   return (
     <div className={styles.body}>
