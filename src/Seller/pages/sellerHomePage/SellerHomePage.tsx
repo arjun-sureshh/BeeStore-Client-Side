@@ -86,7 +86,7 @@ const SellerHomePage: React.FC = () => {
     activeListingDetails: [],
   });
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+ 
   const [expandedSections, setExpandedSections] = useState<{
     newOrders: boolean;
     activeListings: boolean;
@@ -114,7 +114,7 @@ const SellerHomePage: React.FC = () => {
         setSellerData(response.data);
       } catch (error) {
         console.error("Error fetching seller details:", error);
-        setError("Failed to fetch seller details");
+       
         setLoading(false);
       }
     };
@@ -134,7 +134,7 @@ const SellerHomePage: React.FC = () => {
         setLoading(false);
       } catch (error) {
         console.error("Error fetching dashboard stats:", error);
-        setError("Failed to fetch dashboard stats");
+        
         setLoading(false);
       }
     };
